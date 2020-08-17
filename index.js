@@ -17,6 +17,6 @@ const server = new ApolloServer({
     resolvers
 })
 
-server.listen().then(({url}) => {
+server.listen(80).then(({url}) => {
     console.log("l'api tourne sur ", url);
 });
