@@ -1,0 +1,25 @@
+{
+  "name": "news-hub-api",
+  "version": "1.0.0",
+  "description": "news-hub-api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -e js,json,graphql"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Heiiji/news-hub-api.git"
+  },
+  "author": "jjuret",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Heiiji/news-hub-api/issues"
+  },
+  "homepage": "https://github.com/Heiiji/news-hub-api#readme",
+  "dependencies": {
+    "apollo-server": "^2.16.1",
+    "graphql": "^15.3.0",
+    "nodemon": "^2.0.4"
+  }
+}
