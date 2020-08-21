@@ -3,7 +3,7 @@ const { ApolloServer, gql } = require('apollo-server-express');
 const cors = require('cors');
 const dotEnv = require('dotenv');
 
-const { users, threads } = require('./constants')
+const resolvers = require('./resolvers');
 
 // set env var
 
@@ -23,6 +23,19 @@ const typeDefs = gql`
         greetings: [String!]
         threads: [Thread!]
         thread(id: ID!): Thread
+        users: [User!]
+        user(id: ID!): User
+    }
+    
+    input createThreadInput {
+        name: String,
+        description: String,
+        language: String,
+        url: String!
+    }
+    
+    type Mutation {
+        createThread(input: createThreadInput!): Thread
     }
     
     type User {
@@ -46,19 +59,6 @@ const typeDefs = gql`
         private: Boolean
     }
 `;
-
-const resolvers = {
-    Query: {
-        greetings: () => null,
-        threads: () => threads,
-        thread: (_, args) => threads.find(thread => thread.id === args.id)
-    },
-    Thread: {
-        subscribers: ({subscribersId}) => {
-            return subscribersId.map(id => users.find(user => user.id === id))
-        }
-    }
-};
 
 const apolloServer = new ApolloServer({
     typeDefs,
