@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -e js,json,graphql"
+    "start": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,10 @@
   "homepage": "https://github.com/Heiiji/news-hub-api#readme",
   "dependencies": {
     "apollo-server": "^2.16.1",
+    "apollo-server-express": "^2.16.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "graphql": "^15.3.0",
     "mongoose": "^5.10.0",
     "nodemon": "^2.0.4"
