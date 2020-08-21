@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotEnv = require('dotenv');
 
 const resolvers = require('./resolvers');
+const typeDefs = require('./typeDefs');
 
 // set env var
 
@@ -17,48 +18,6 @@ app.use(cors());
 // body parser middleware
 
 app.use(express.json());
-
-const typeDefs = gql`
-    type Query {
-        greetings: [String!]
-        threads: [Thread!]
-        thread(id: ID!): Thread
-        users: [User!]
-        user(id: ID!): User
-    }
-    
-    input createThreadInput {
-        name: String,
-        description: String,
-        language: String,
-        url: String!
-    }
-    
-    type Mutation {
-        createThread(input: createThreadInput!): Thread
-    }
-    
-    type User {
-        id: ID!
-        name: String!
-        email: String!
-        subscriptions: [Thread!]
-    }
-    
-    type Thread {
-        id: ID!
-        name: String!
-        description: String
-        language: String
-        image: String
-        domain: String
-        url: String!
-        httpStatus: Int,
-        tags: [String!],
-        subscribers: [User!],
-        private: Boolean
-    }
-`;
 
 const apolloServer = new ApolloServer({
     typeDefs,
