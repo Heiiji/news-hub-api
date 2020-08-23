@@ -4,6 +4,8 @@ const userTypeDefs = require('./user');
 const threadTypeDefs = require('./thread');
 
 const typeDefs = gql`
+    scalar Date
+    
     type Query {
         _: String
     }
