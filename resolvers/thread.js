@@ -1,16 +1,40 @@
-const uuid = require('uuid');
-const { users, threads } = require('../constants');
+const Thread = require('../database/models/thread');
+let Parser = require('rss-parser');
+let parser = new Parser();
 
 module.exports = {
     Query: {
-        threads: () => threads,
-        thread: (_, args) => threads.find(thread => thread.id === args.id)
+        threads: async () => {
+            let threads = await Thread.find();
+            return threads;
+        },
+        thread: async (_, args) => {
+            let thread = await Thread.findById(args.id);
+            return thread;
+        }
     },
     Mutation: {
-        createThread: (_, { input }) => {
-            const thread = {...input, id: uuid.v4()};
-            threads.push(thread);
-            return thread;
+        createThread: async (_, { url }) => {
+            console.log("check ", url);
+            let feed = await parser.parseURL(url);
+            let thread = await Thread.findOne({ url: url });
+            if (thread) {
+                console.log("already exist", thread)
+                return null;
+            }
+            let regex = /^https?:\/\/[^\/]+/i;
+            thread = new Thread({
+                name: feed.title,
+                description: feed.description,
+                language: feed.language,
+                image: feed.image.url,
+                domain: regex.exec(url)[0],
+                url: url,
+                status: '200'
+            });
+            let newOne = await thread.save();
+            console.log("newOne", newOne)
+            return newOne;
         }
     },
     Thread: {

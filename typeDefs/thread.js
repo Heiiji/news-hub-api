@@ -7,14 +7,11 @@ module.exports = gql`
     }
     
     input createThreadInput {
-        name: String,
-        description: String,
-        language: String,
         url: String!
     }
     
     extend type Mutation {
-        createThread(input: createThreadInput!): Thread
+        createThread(url: String!): Thread
     }
     
     type Thread {
@@ -25,7 +22,7 @@ module.exports = gql`
         image: String
         domain: String
         url: String!
-        httpStatus: Int,
+        status: String,
         tags: [String!],
         subscribers: [User!],
         private: Boolean
