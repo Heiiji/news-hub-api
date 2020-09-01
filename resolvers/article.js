@@ -1,18 +1,16 @@
 const uuid = require('uuid');
+const Article = require('../database/models/article');
 
 module.exports = {
     Query: {
-        articles: () => threads,
-        article: (_, args) => threads.find(thread => thread.id === args.id)
-    },
-    Mutation: {
-        createThread: (_, { input }) => {
-            const thread = {...input, id: uuid.v4()};
-            threads.push(thread);
-            return thread;
+        articles: () => {
+            return Article.find();
+        },
+        article: (_, args) => {
+            return Article.findById(args.id);
         }
     },
-    Thread: {
+    Article: {
         subscribers: ({subscribersId}) => {
             return subscribersId.map(id => users.find(user => user.id === id))
         }
