@@ -3,16 +3,15 @@ const Article = require('../database/models/article');
 
 module.exports = {
     Query: {
-        articles: () => {
-            return Article.find();
+        articles: async () => {
+            let articles = await Article.find();
+            return articles;
         },
-        article: (_, args) => {
-            return Article.findById(args.id);
+        article: async (_, args) => {
+            let article = await Article.findById(args.id);
+            return article;
         }
     },
     Article: {
-        subscribers: ({subscribersId}) => {
-            return subscribersId.map(id => users.find(user => user.id === id))
-        }
     },
 }

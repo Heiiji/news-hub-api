@@ -69,7 +69,7 @@ const getThreadData = async (thread) => {
 
 
 ITEM
-'creator',
+  'creator',
   'title',
   'link',
   'pubDate',

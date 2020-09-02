@@ -47,7 +47,7 @@ app.listen(PORT, () => {
 
 // routine
 
-cron.schedule("* * * * *", function() {
+cron.schedule("* 1 * * *", function() {
     console.log("Routine start");
-     routine();
+    routine();
   });
