@@ -39,6 +39,10 @@ const threadSchema = new mongoose.Schema({
     private: {
         type: Boolean,
         default: true
+    },
+    refreshAt: {
+        type: Date,
+        default: Date.now
     }
 }, {
     timestamp: true

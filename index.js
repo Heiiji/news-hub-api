@@ -2,6 +2,8 @@ const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
 const cors = require('cors');
 const dotEnv = require('dotenv');
+const cron = require('node-cron');
+const routine = require('./utils/routine');
 
 const resolvers = require('./resolvers');
 const typeDefs = require('./typeDefs');
@@ -41,3 +43,11 @@ app.listen(PORT, () => {
     console.log(`server listen on PORT : ${PORT}`);
     console.log(`graphql endpoint  : ${apolloServer.graphqlPath}`);
 })
+
+
+// routine
+
+cron.schedule("* * * * *", function() {
+    console.log("Routine start");
+     routine();
+  });
