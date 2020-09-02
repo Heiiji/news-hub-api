@@ -1,17 +1,59 @@
+const urlMetadata = require('url-metadata');
 const Thread = require('../database/models/thread');
+const Article = require('../database/models/article');
 let Parser = require('rss-parser');
 
 let parser = new Parser();
+
+const getArticleData = async (article, thread) => {
+  let tags = [...thread.tags];
+  if (new Date(thread.refreshAt) > new Date(article.isoDate)) {
+    return;
+  }
+  if (article.categories) {
+    tags = tags.concat(article.categories);
+  }
+    urlMetadata(article.link).then(
+    function (metadata) {
+      let newArticle = new Article({
+        title: article.title ? article.title : metadata.title,
+        description: article.contentSnippet ? article.contentSnippet : metadata.description,
+        threadId: thread._id,
+        tags: tags,
+        url: article.link,
+        author: article.creator,
+        content: article.content,
+        image: metadata.image,
+        date: article.isoDate
+      });
+      newArticle.save();
+    },
+    function (error) { // failure handler
+      console.log(error);
+      let newArticle = new Article({
+        title: article.title,
+        description: article.contentSnippet,
+        threadId: thread._id,
+        tags: tags,
+        url: article.link,
+        author: article.creator,
+        content: article.content,
+        image: thread.image,
+        date: article.isoDate
+      });
+      newArticle.save();
+    })
+}
 
 const getThreadData = async (thread) => {
     if (!thread) {
         throw "invalid args";
     }
     let feed = await parser.parseURL(thread.url);
-    console.log(Object.keys(feed.items[0]));
-    console.log(thread.refreshAt); // 2020-09-02T12:56:00.012Z
-    console.log(Date.now()); // 1599051360702
-}
+    feed.items.forEach((article) => getArticleData(article, thread));
+    thread.refreshAt = new Date();
+    thread.save();
+  }
 
 /*
 
