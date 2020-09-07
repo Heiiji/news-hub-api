@@ -4,7 +4,7 @@ const Article = require('../database/models/article');
 module.exports = {
     Query: {
         articles: async () => {
-            let articles = await Article.find();
+            let articles = await Article.find().sort({date: 'desc'});
             return articles;
         },
         article: async (_, args) => {
