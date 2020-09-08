@@ -21,14 +21,14 @@ module.exports = gql`
     }
     
     input signupInput {
-        name: String!
+        username: String!
         email: String!
         password: String!
     }
     
     type User {
         id: ID!
-        name: String!
+        username: String!
         email: String!
         subscriptions: [Thread!]
         createdAt: Date!
