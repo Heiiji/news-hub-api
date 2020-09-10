@@ -1,5 +1,7 @@
 const Thread = require('../database/models/thread');
 let Parser = require('rss-parser');
+const urlMetadata = require('url-metadata');
+
 let parser = new Parser();
 
 module.exports = {
@@ -23,11 +25,15 @@ module.exports = {
                 return null;
             }
             let regex = /^https?:\/\/[^\/]+/i;
+
+            const metadata = await urlMetadata(url);
+            console.log(metadata.image);
+            
             thread = new Thread({
                 name: feed.title,
                 description: feed.description,
                 language: feed.language,
-                image: feed.image.url,
+                image: metadata.image ? metadata.image : feed.image ? feed.image.url : null,
                 domain: regex.exec(url)[0],
                 url: url,
                 status: '200'
