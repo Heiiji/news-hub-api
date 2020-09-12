@@ -8,10 +8,17 @@ const { isAuthenticated } = require('./middleware');
 
 module.exports = {
     Query: {
-        users: () => users,
-        user: combineResolvers(isAuthenticated, (_, { id }, { email }) => {
-            console.log(email);
-            return users.find(user => user.id === id);
+        user: combineResolvers(isAuthenticated, async (_, __, { email }) => {
+            try {
+                const user = await User.findOne({ email });
+                if (!user) {
+                    throw new Error('User not found!');
+                }
+                return user;
+            } catch(err) {
+                console.log(err);
+                throw(err);
+            }
         })
     },
     Mutation: {
