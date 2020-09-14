@@ -22,6 +22,27 @@ module.exports = {
         })
     },
     Mutation: {
+        changePassword: combineResolvers(isAuthenticated, async (_, { input }, { email }) => {
+            try {
+                const user = await User.findOne({ email });
+                if (!user) {
+                    throw new Error('User not found!');
+                }
+
+                const isPasswordValid = await bcrypt.compare(input.oldPassword, user.password);
+                if (!isPasswordValid) {
+                    throw new Error('Invalid password');
+                }
+
+                user.password = await bcrypt.hash(input.password, 12);
+                const result = await user.save();
+
+                return result;
+            } catch(err) {
+                console.log(err);
+                throw(err);
+            }
+        }),
         signup: async (_, { input }) => {
             try {
                 const user = await User.findOne({ email: input.email });
