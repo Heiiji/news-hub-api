@@ -7,7 +7,7 @@ let parser = new Parser();
 
 const getArticleData = async (article, thread) => {
   let tags = [...thread.tags];
-  if (new Date(thread.refreshAt) > new Date(article.isoDate)) {
+  if (new Date(thread.refreshAt) >= new Date(article.isoDate)) {
     return;
   }
   if (article.categories) {
@@ -50,7 +50,8 @@ const getThreadData = async (thread) => {
         throw "invalid args";
     }
     let feed = await parser.parseURL(thread.url);
-    feed.items.forEach((article) => getArticleData(article, thread));
+    const threadNoRef = JSON.parse(JSON.stringify(thread)); // test to be sure is not a ref
+    feed.items.forEach((article) => getArticleData(article, threadNoRef));
     thread.refreshAt = new Date();
     thread.save();
   }
