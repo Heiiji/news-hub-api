@@ -24,7 +24,7 @@ const getArticleData = async (article, thread) => {
         author: article.creator,
         content: article.content,
         image: metadata.image,
-        date: article.isoDate
+        date: new Date(article.isoDate)
       });
       newArticle.save();
     },
@@ -39,7 +39,7 @@ const getArticleData = async (article, thread) => {
         author: article.creator,
         content: article.content,
         image: thread.image,
-        date: article.isoDate
+        date: new Date(article.isoDate)
       });
       newArticle.save();
     })

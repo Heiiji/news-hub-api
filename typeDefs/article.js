@@ -13,6 +13,7 @@ module.exports = gql`
         thread: Thread
         tags: [String!]
         url: String!
+        date: Date!
         author: String
         content: String
         image: String
