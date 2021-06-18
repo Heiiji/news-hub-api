@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const threadSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     description: {
         type: String,
@@ -24,7 +25,8 @@ const threadSchema = new mongoose.Schema({
     },
     url: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     status: {
         type: String,
