@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express');
 module.exports = gql`
     extend type Query {
         articles: [Article!]
-        article(id: ID!): Article
+        article(id: String!): Article
     }
     
     type Article {

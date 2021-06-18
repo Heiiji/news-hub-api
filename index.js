@@ -1,5 +1,5 @@
 const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 const cors = require('cors');
 const dotEnv = require('dotenv');
 const cron = require('node-cron');
@@ -54,7 +54,7 @@ app.listen(PORT, () => {
 
 // routine
 
-cron.schedule("* 1 * * *", function() {
+cron.schedule("*/10 * * * *", function() {
     console.log("Routine start");
     routine();
   });
