@@ -10,6 +10,10 @@ module.exports = {
         article: async (_, args) => {
             let article = await Article.findById(args.id);
             return article;
+        },
+        searchArticles: async (_, args) => {
+            let article = await Article.find({ $title: { $search: args.search} });
+            return article;
         }
     },
     Article: {
