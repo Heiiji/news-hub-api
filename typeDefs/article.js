@@ -4,6 +4,7 @@ module.exports = gql`
     extend type Query {
         articles: [Article!]
         article(id: String!): Article
+        searchArticles(search: String!): [Article!]
     }
     
     type Article {

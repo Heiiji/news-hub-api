@@ -12,8 +12,9 @@ module.exports = {
             return article;
         },
         searchArticles: async (_, args) => {
-            let article = await Article.find({ $title: { $search: args.search} });
-            return article;
+            console.log("search");
+            console.log(args);
+            return Article.find({$text: {$search: args.search}});
         }
     },
     Article: {
