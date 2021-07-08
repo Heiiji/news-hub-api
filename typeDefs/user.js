@@ -9,6 +9,7 @@ module.exports = gql`
         signup(input: signupInput): User
         login(input: loginInput): Token
         changePassword(input: changePasswordInput): User
+        subscribe(input: subscribeInput): User
     }
     
     type Token {
@@ -31,11 +32,15 @@ module.exports = gql`
         password: String!
     }
     
+    input subscribeInput {
+        threadId: String!
+    }
+    
     type User {
         id: ID!
         username: String
         email: String!
-        subscriptions: [Thread!]
+        subscriptions: [Thread]
         createdAt: Date!
         updatedAt: Date!
     }

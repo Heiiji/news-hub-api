@@ -75,11 +75,20 @@ module.exports = {
                 console.log(e);
                 throw e;
             }
+        },
+        subscribe: async (_, sec) => {
+            try {
+                console.log("wololo");
+                console.log(sec);
+            } catch (e) {
+                console.log(e);
+                throw e;
+            }
         }
     },
     User: {
-        subscriptions: ({ subscriptionsId }) => {
-            return subscriptionsId.map(id => threads.find(thread => thread.id === id))
+        subscriptions: ({ subscriptions }) => {
+            return subscriptions.map(id => threads.find(thread => thread.id === id))
         }
     }
 }
