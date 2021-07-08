@@ -3,8 +3,8 @@ const Article = require('../database/models/article');
 
 module.exports = {
     Query: {
-        articles: async () => {
-            let articles = await Article.find().sort({date: 'desc'});
+        articles: async (_, args) => {
+            let articles = await Article.find().sort({date: 'desc'}).limit(args.limit);
             return articles;
         },
         article: async (_, args) => {
