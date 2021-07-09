@@ -1,4 +1,13 @@
+const ApolloServer = require('apollo-server-express')
 const jwt = require('jsonwebtoken');
+
+class TokenError extends ApolloServer.ApolloError {
+    constructor(message) {
+        super(message, '403');
+
+        Object.defineProperty(this, 'name', { value: 'MyError' });
+    }
+}
 
 module.exports.verifyUser = async (req) => {
     try {
@@ -11,6 +20,6 @@ module.exports.verifyUser = async (req) => {
         }
     } catch(err) {
         console.log(err);
-        throw(err);
+        throw new TokenError("invalid token");
     }
 }
